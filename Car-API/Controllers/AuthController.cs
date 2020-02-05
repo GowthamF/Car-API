@@ -25,7 +25,7 @@ namespace Car_API.Controllers
         {
             userDto.UserName = userDto.UserName.ToLower();
 
-            if (await _auth.UserExists(userDto.UserName))
+            if (await _auth.UserExists(userDto.UserName,userDto.TelephoneNumber))
             {
                 return BadRequest("Username already exists");
             }
@@ -42,7 +42,7 @@ namespace Car_API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserDTO userDTO)
         {
-            var user = await _auth.Login(userDTO.UserName.ToLower(), userDTO.Password);
+            var user = await _auth.Login(userDTO.UserName.ToLower(), userDTO.Password,userDTO.TelephoneNumber);
 
             if (user == null)
             {
@@ -52,6 +52,40 @@ namespace Car_API.Controllers
             userDTO.UserId = user.UserId;
 
             return Ok(userDTO);
+        }
+
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(UserDTO userDTO)
+        {
+            userDTO.UserName = userDTO.UserName.ToLower();
+
+            if (await _auth.UserExists(userDTO.UserName, userDTO.TelephoneNumber))
+            {
+                return BadRequest("User Name or Telephone Number Already Exists");
+            }
+
+            var user = new User { UserName = userDTO.UserName, TelephoneNumber = userDTO.TelephoneNumber ,UserId=userDTO.UserId};
+
+            var updatedUser = await _auth.UpdateUser(user,userDTO.Password);
+
+            return Ok(updatedUser);
+        }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(UserDTO userDTO)
+        {
+            userDTO.UserName = userDTO.UserName.ToLower();
+
+            if (await _auth.UserExists(userDTO.UserName, userDTO.TelephoneNumber))
+            {
+                return BadRequest("User Name or Telephone Number does not Exist");
+            }
+
+            var user = new User { UserName = userDTO.UserName, TelephoneNumber = userDTO.TelephoneNumber, UserId = userDTO.UserId };
+
+            var deletedUser = await _auth.DeleteUser(user);
+
+            return Ok(deletedUser);
         }
     }
 }

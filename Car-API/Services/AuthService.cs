@@ -17,9 +17,24 @@ namespace Car_API.Services
             _context = context;
         }
 
-        public async Task<User> Login(string userName, string password)
+        public async Task<bool> DeleteUser(User user)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+            var _user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            _context.Users.Remove(_user);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<User> Login(string userName, string password,int telNumber)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.TelephoneNumber==telNumber);
 
             if (user == null)
             {
@@ -50,9 +65,27 @@ namespace Car_API.Services
             return user;
         }
 
-        public async Task<bool> UserExists(string userName)
+        public async Task<User> UpdateUser(User user,string password)
         {
-            if (await _context.Users.AnyAsync(x => x.UserName == userName))
+
+            byte[] passwordHash, passwordSalt;
+            var _user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            _user.UserName = user.UserName;
+            _user.TelephoneNumber = user.TelephoneNumber;
+            _user.PasswordHash = passwordHash;
+            _user.PasswordSalt = passwordSalt;
+
+            await _context.SaveChangesAsync();
+
+            return _user;
+        }
+
+        public async Task<bool> UserExists(string userName, int telNumber)
+        {
+            if (await _context.Users.AnyAsync(x => x.UserName == userName && x.TelephoneNumber==telNumber))
             {
                 return true;
             }
