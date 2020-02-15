@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200118120003_Initial.cs" />
+    <Compile Remove="Migrations\20200118120003_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200215133758_Change_Property.cs" />
+    <Compile Remove="Migrations\20200215133758_Change_Property.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />

@@ -25,12 +25,12 @@ namespace Car_API.Controllers
         {
             userDto.UserName = userDto.UserName.ToLower();
 
-            if (await _auth.UserExists(userDto.UserName,userDto.TelephoneNumber))
+            if (await _auth.UserExists(userDto.UserName.Trim(),userDto.TelephoneNumber.Trim()))
             {
                 return BadRequest("Username already exists");
             }
 
-            var user = new User { UserName = userDto.UserName, TelephoneNumber = userDto.TelephoneNumber };
+            var user = new User { UserName = userDto.UserName.Trim(), TelephoneNumber = userDto.TelephoneNumber.Trim() };
 
             var createdUser = await _auth.Register(user, userDto.Password);
 
@@ -42,7 +42,7 @@ namespace Car_API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserDTO userDTO)
         {
-            var user = await _auth.Login(userDTO.UserName.ToLower(), userDTO.Password,userDTO.TelephoneNumber);
+            var user = await _auth.Login(userDTO.UserName.ToLower().Trim(), userDTO.Password,userDTO.TelephoneNumber.Trim());
 
             if (user == null)
             {
@@ -59,7 +59,7 @@ namespace Car_API.Controllers
         {
             userDTO.UserName = userDTO.UserName.ToLower();
 
-            if (await _auth.UserExists(userDTO.UserName, userDTO.TelephoneNumber))
+            if (await _auth.UserExists(userDTO.UserName.Trim(), userDTO.TelephoneNumber.Trim()))
             {
                 return BadRequest("User Name or Telephone Number Already Exists");
             }
@@ -76,7 +76,7 @@ namespace Car_API.Controllers
         {
             userDTO.UserName = userDTO.UserName.ToLower();
 
-            if (await _auth.UserExists(userDTO.UserName, userDTO.TelephoneNumber))
+            if (await _auth.UserExists(userDTO.UserName.Trim(), userDTO.TelephoneNumber.Trim()))
             {
                 return BadRequest("User Name or Telephone Number does not Exist");
             }

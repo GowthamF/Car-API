@@ -16,7 +16,7 @@ namespace Car_API.Migrations
                     UserName = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
-                    TelephoneNumber = table.Column<int>(nullable: false)
+                    TelephoneNumber = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

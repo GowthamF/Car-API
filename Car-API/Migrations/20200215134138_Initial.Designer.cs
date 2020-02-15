@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Car_API.Migrations
 {
     [DbContext(typeof(CarDBContext))]
-    [Migration("20200118120003_Initial")]
+    [Migration("20200215134138_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,8 +30,8 @@ namespace Car_API.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
 
-                    b.Property<int>("TelephoneNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("TelephoneNumber")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");

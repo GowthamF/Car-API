@@ -32,9 +32,9 @@ namespace Car_API.Services
             return true;
         }
 
-        public async Task<User> Login(string userName, string password,int telNumber)
+        public async Task<User> Login(string userName, string password, string telNumber)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.TelephoneNumber==telNumber);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName || x.TelephoneNumber==telNumber);
 
             if (user == null)
             {
@@ -83,9 +83,9 @@ namespace Car_API.Services
             return _user;
         }
 
-        public async Task<bool> UserExists(string userName, int telNumber)
+        public async Task<bool> UserExists(string userName, string telNumber)
         {
-            if (await _context.Users.AnyAsync(x => x.UserName == userName && x.TelephoneNumber==telNumber))
+            if (await _context.Users.AnyAsync(x => x.UserName == userName || x.TelephoneNumber==telNumber))
             {
                 return true;
             }

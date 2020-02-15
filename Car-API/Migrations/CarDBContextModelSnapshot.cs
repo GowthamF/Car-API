@@ -28,8 +28,8 @@ namespace Car_API.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
 
-                    b.Property<int>("TelephoneNumber")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("TelephoneNumber")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
                         .HasColumnType("TEXT");

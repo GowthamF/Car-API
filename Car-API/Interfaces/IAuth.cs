@@ -10,9 +10,9 @@ namespace Car_API.Interfaces
     {
         Task<User> Register(User user, string password);
 
-        Task<User> Login(string userName, string password, int telNumber);
+        Task<User> Login(string userName, string password, string telNumber);
 
-        Task<bool> UserExists(string userName,int telNumber);
+        Task<bool> UserExists(string userName, string telNumber);
 
         Task<User> UpdateUser(User user, string password);
 

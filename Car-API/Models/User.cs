@@ -15,6 +15,6 @@ namespace Car_API.Models
 
         public byte[] PasswordSalt { get; set; }
 
-        public int TelephoneNumber { get; set; }
+        public string TelephoneNumber { get; set; }
     }
 }
